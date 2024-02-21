@@ -17,7 +17,7 @@ import dotenv
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'dnwkdnifmkml'
+app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
@@ -31,7 +31,7 @@ class Base(DeclarativeBase):
     pass
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI')
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -270,11 +270,11 @@ def contact():
 
 def send_email(name, email, phone, message):
     email_message = f"Subject:New Message\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage:{message}"
-    with smtplib.SMTP("smtp.gmail.com",587) as connection:
+    with smtplib.SMTP("smtp.gmail.com",int(os.environ.get('EMAIL_PORT'))) as connection:
         connection.starttls()
         connection.login(user=MAIL_ADDRESS, password=MAIL_APP_PW)
         connection.sendmail(MAIL_ADDRESS,MAIL_ADDRESS, email_message)
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
+    app.run(debug=False)
