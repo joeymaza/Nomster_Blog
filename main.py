@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Flask, abort, render_template, redirect, url_for, flash, request
+from flask import Flask, abort, render_template, redirect, url_for, flash,request
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
@@ -13,6 +13,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm
 import smtplib
 import os
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
@@ -268,10 +269,10 @@ def contact():
 
 def send_email(name, email, phone, message):
     email_message = f"Subject:New Message\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage:{message}"
-    with smtplib.SMTP("smtp.gmail.com", int(os.environ.get('EMAIL_PORT'))) as connection:
+    with smtplib.SMTP("smtp.gmail.com",int(os.environ.get('EMAIL_PORT'))) as connection:
         connection.starttls()
         connection.login(user=MAIL_ADDRESS, password=MAIL_APP_PW)
-        connection.sendmail(MAIL_ADDRESS, MAIL_ADDRESS, email_message)
+        connection.sendmail(MAIL_ADDRESS,MAIL_ADDRESS, email_message)
 
 
 if __name__ == "__main__":
