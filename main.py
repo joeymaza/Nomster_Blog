@@ -13,7 +13,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm
 import smtplib
 import os
-import dotenv
+
 
 
 app = Flask(__name__)
